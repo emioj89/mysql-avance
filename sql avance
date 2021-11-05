@@ -1,0 +1,47 @@
+mysql> SELECT team.name, COUNT(*) AS nb_player
+    -> FROM player
+    -> JOIN team ON team_id = team.id
+    -> GROUP BY team.name
+    -> ORDER BY nb_player DESC;
++------------+-----------+
+| name       | nb_player |
++------------+-----------+
+| Gryffindor |        36 |
+| Slytherin  |        21 |
+| Ravenclaw  |        15 |
+| Hufflepuff |        12 |
++------------+-----------+
+4 rows in set (0.01 sec)
+
+
+
+
+mysql> SELECT team.name, COUNT(*) AS nb_player
+    -> FROM player
+    -> JOIN team ON team_id = team.id
+    -> GROUP BY team.name
+    -> HAVING nb_player >14
+    -> ORDER BY team.name ASC;
++------------+-----------+
+| name       | nb_player |
++------------+-----------+
+| Gryffindor |        36 |
+| Ravenclaw  |        15 |
+| Slytherin  |        21 |
++------------+-----------+
+3 rows in set (0.00 sec)
+
+
+
+mysql>  SELECT wizard.firstname, wizard.lastname, player.role, player.enrollment_date, team.name
+    -> FROM player
+    -> JOIN wizard ON wizard_id = wizard.id
+    -> JOIN team on team_id = team.id
+    -> WHERE team.name = "Gryffindor" AND DAYOFWEEK(player.enrollment_date) = 2
+    -> ORDER BY enrollment_date DESC;
++-----------+----------+--------+-----------------+------------+
+| firstname | lastname | role   | enrollment_date | name       |
++-----------+----------+--------+-----------------+------------+
+| fred      | weasley  | beater | 1994-01-10      | Gryffindor |
++-----------+----------+--------+-----------------+------------+
+1 row in set (0.00 sec)
